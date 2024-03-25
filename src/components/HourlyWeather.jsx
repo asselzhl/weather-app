@@ -4,6 +4,8 @@ import { Line } from "react-chartjs-2";
 
 import clock from "../assets/svg/clock.svg";
 
+import Activities from "./Activities";
+
 import {
   Chart as ChartJS,
   LineElement,
@@ -40,7 +42,7 @@ const HourlyWeather = ({ city }) => {
         degreesArray.push(item.main.temp.toFixed());
         windSpeedArray.push(`${item.wind.speed}km/h`);
       });
-      
+
       setLabels(labelsArray);
       setDegrees(degreesArray);
       setWindSpeed(windSpeedArray);
@@ -73,7 +75,7 @@ const HourlyWeather = ({ city }) => {
   };
   const options = {
     layout: {
-        padding: 40
+      padding: 40,
     },
     plugins: {
       legend: true,
@@ -103,7 +105,6 @@ const HourlyWeather = ({ city }) => {
     },
     scales: {
       x: {
-        
         // min: 0,
         // max: 6,
         grid: {
@@ -120,15 +121,22 @@ const HourlyWeather = ({ city }) => {
         display: false,
       },
     },
+    responsive: true,
+    maintainAspectRatio: false,
   };
 
   return (
-    <div className="bg-[#DFAE53]/80 rounded-lg lg:rounded-[40px]">
-      <div className="flex gap-x-1.5 p-3 lg:px-[35px]">
-        <img src={clock} alt="" />
-        24-hour forecast
+    <div className="order-1">
+      <div className="mb-[32px] hidden lg:block lg:bg-[#DFAE53]/80 lg:rounded-[40px] pt-[20px] pb-[35px] lg:px-[35px]">
+        <Activities />
       </div>
-      <Line data={lineData} options={options} />
+      <div className="bg-[#DFAE53]/80 rounded-lg lg:rounded-[40px] h-[30vh] lg:[50vh]">
+        <div className="flex gap-x-1.5 p-3 lg:px-[35px]">
+          <img src={clock} alt="" />
+          24-hour forecast
+        </div>
+        <Line data={lineData} options={options} />
+      </div>
     </div>
   );
 };

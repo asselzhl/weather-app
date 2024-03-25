@@ -10,4 +10,13 @@ body {
     font-family: "Inter Tight", sans-serif;
     font-weight: 400;
     font-size: 1em;
+    background-color: #D69E36;
 }
+
+:root {
+    --swiper-navigation-size: 20px;
+}
+.swiper-button-prev, .swiper-button-next {
+    color: #F5B747;
+}
+

@@ -4,9 +4,10 @@ import axios from "axios";
 import pin from "./assets/svg/pin.svg";
 
 import HourlyWeather from "./components/HourlyWeather";
+import DailyWeather from "./components/DailyWeather";
 
 const style = {
-  container: `bg-[#D69E36] flex flex-col h-screen px-6 py-12 text-white`,
+  container: `flex flex-col h-screen px-6 py-12 text-white`,
   inputContainer: `text-white flex items-center lg:pl-24`,
   city: `bg-transparent d-block p-2 font-medium text-xl focus:outline-none lg:text-2xl	`,
 
@@ -101,9 +102,11 @@ function App() {
           <h5 className={style.weatherTodayDate}>{day}</h5>
         </div>
       </div>
-      <div>
+      <div className="lg:flex lg:gap-x-[20px]">
+        <DailyWeather city={city} />
         <HourlyWeather city={city} />
       </div>
+        
     </div>
   );
 }
