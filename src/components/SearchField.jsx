@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import pin from "./assets/svg/pin.svg";
+import pin from "../assets/svg/pin.svg";
 
+const style = {
+  container: `flex flex-col h-screen px-6 py-12 text-white`,
+  inputContainer: `text-white flex items-center lg:pl-24`,
+  city: `bg-transparent d-block p-2 font-medium text-xl focus:outline-none lg:text-2xl	`,
 
-import SearchField from "./components/SearchField";
-import CurrentWeather from "./components/CurrentWeather";
-import HourlyWeather from "./components/HourlyWeather";
-import DailyWeather from "./components/DailyWeather";
-import Sidebar from "./components/Sidebar";
+  weatherToday: `my-9 grid place-content-center lg:grid-cols-2 lg:gap-y-24 lg:px-24`,
+  weatherTodayTitle: `text-2xl font-medium mb-3 lg:text-5xl text-center lg:text-left`,
+  weatherTodayIcon: `mb-3`,
+  weatherTodayTemp: `text-6xl font-medium mb-4`,
+  weatherTodayDate: `text-lg`,
+};
 
-function App() {
+const SearchField = () => {
   const [data, setData] = useState({});
   const [city, setCity] = useState("London");
   const [day, setDay] = useState("");
@@ -62,19 +67,20 @@ function App() {
   }, []);
 
   return (
-    <div className='flex flex-col h-screen px-6 py-12 text-white'>
-      <SearchField />
-
-      <CurrentWeather />
-
-      <div className="lg:flex lg:gap-x-[2%] lg:justify-center lg:px-[30px]">
-        <Sidebar />
-        <DailyWeather city={city} />
-        <HourlyWeather city={city} />
+    <div className={style.inputContainer}>
+      <div>
+        <img src={pin} alt="" />
       </div>
-        
+      <input
+        type="text"
+        className={style.city}
+        value={city}
+        onChange={(event) => setCity(event.target.value)}
+        onKeyPress={searchCity}
+      />
     </div>
   );
-}
+};
 
-export default App;
+
+export default SearchField;
