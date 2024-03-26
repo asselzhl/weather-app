@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { Line } from "react-chartjs-2";
 
 import clock from "../assets/svg/clock.svg";
@@ -24,41 +23,7 @@ ChartJS.register(
   ChartDataLabels
 );
 
-const HourlyWeather = ({ city }) => {
-  const [data, setData] = useState({});
-  const [labels, setLabels] = useState([]);
-  const [degrees, setDegrees] = useState([]);
-  const [windSpeed, setWindSpeed] = useState([]);
-
-  const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=4&appid=b94e2326dd926a1013c56922ede2651e&units=metric`;
-  const getWeatherData = () => {
-    let labelsArray = [];
-    let degreesArray = [];
-    let windSpeedArray = [];
-    axios.get(url).then((response) => {
-      setData(response.data);
-      response.data.list.forEach((item) => {
-        labelsArray.push(`${new Date(item.dt_txt).getHours()}:00`);
-        degreesArray.push(item.main.temp.toFixed());
-        windSpeedArray.push(`${item.wind.speed}km/h`);
-      });
-
-      setLabels(labelsArray);
-      setDegrees(degreesArray);
-      setWindSpeed(windSpeedArray);
-    });
-  };
-
-  useEffect(() => {
-    const handleLoad = () => {
-      getWeatherData();
-    };
-    window.addEventListener("load", handleLoad);
-    return () => {
-      window.removeEventListener("load", handleLoad);
-    };
-  }, []);
-
+const HourlyWeather = ({ labels, degrees, windSpeed }) => {
   const calculate = (i) => {
     return windSpeed[i];
   };
@@ -105,8 +70,6 @@ const HourlyWeather = ({ city }) => {
     },
     scales: {
       x: {
-        // min: 0,
-        // max: 6,
         grid: {
           display: false,
         },

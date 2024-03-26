@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -16,34 +15,7 @@ import sun from "../assets/svg/sun.svg";
 import { Navigation, EffectCoverflow } from "swiper/modules";
 
 
-const DailyWeather = ({ city }) => {
-  const [data, setData] = useState({});
-  const [dailyIconsId, setDailyIconsId] = useState([]);
-
-  const dailyIconsIndexes = [0, 4, 8, 12, 16, 20, 24, 28, 32, 36];
-
-  const url = `https://api.openweathermap.org/data/2.5/forecast?q=london&appid=b94e2326dd926a1013c56922ede2651e&units=metric`;
-  const getWeatherData = () => {
-    let dailyIconsArray = [];
-    axios.get(url).then((response) => {
-      setData(response.data);
-      dailyIconsIndexes.forEach((item) =>
-        dailyIconsArray.push(response.data.list[item].weather[0].id)
-      );
-
-      setDailyIconsId(dailyIconsArray);
-    });
-  };
-  useEffect(() => {
-    const handleLoad = () => {
-      getWeatherData();
-    };
-    window.addEventListener("load", handleLoad);
-    return () => {
-      window.removeEventListener("load", handleLoad);
-    };
-  }, []);
-  
+const DailyWeather = ({ dailyIconsId }) => {
   return (
       <div className="mb-[32px] lg:mb-0 lg:bg-[#DFAE53]/80 lg:rounded-[40px] lg:pt-[34px] lg:pb-[47px] lg:w-[22.5%] order-2 hills">
         <div className="lg:mb-[34px]">

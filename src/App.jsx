@@ -3,57 +3,84 @@ import axios from "axios";
 
 import pin from "./assets/svg/pin.svg";
 
-
-import SearchField from "./components/SearchField";
 import CurrentWeather from "./components/CurrentWeather";
 import HourlyWeather from "./components/HourlyWeather";
 import DailyWeather from "./components/DailyWeather";
 import Sidebar from "./components/Sidebar";
 
+const style = {
+  container: `flex flex-col h-screen px-6 py-12 text-white`,
+  inputContainer: `text-white flex items-center lg:pl-24`,
+  city: `bg-transparent d-block p-2 font-medium text-xl focus:outline-none lg:text-2xl	capitalize`,
+  errorMessage: `capitalize text-xl lg:text-2x text-center bg-[#DFAE53]/80 rounded-lg lg:rounded-[40px] p-3 mt-3 font-medium`
+};
+
 function App() {
   const [data, setData] = useState({});
-  const [city, setCity] = useState("London");
-  const [day, setDay] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [city, setCity] = useState("New York");
+  const [labels, setLabels] = useState([]);
+  const [degrees, setDegrees] = useState([]);
+  const [windSpeed, setWindSpeed] = useState([]);
+  const [dailyIconsId, setDailyIconsId] = useState([]);
+
+  const dailyIconsIndexes = [0, 4, 8, 12, 16, 20, 24, 28, 32, 36];
 
   const apiKey = "b94e2326dd926a1013c56922ede2651e";
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${
-    city ? city : "london"
-  }&appid=${apiKey}&units=metric`;
+  const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  const dailyWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
 
-  const getWeatherData = () => {
-    axios.get(url).then((response) => {
-      setData(response.data);
-    });
+  const getCurrentWeatherData = () => {
+    axios
+      .get(currentWeatherUrl)
+      .then((response) => {
+        setData(response.data);
+        setErrorMessage('');
+      })
+      .catch((error) => {
+        setErrorMessage(error.response.data.message);
+      });
   };
 
-  const getDate = () => {
-    const dayNames = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    const day = new Date().getDay();
+  const getDailyWeatherData = () => {
+    let labelsArray = [];
+    let degreesArray = [];
+    let windSpeedArray = [];
 
-    const date = new Date().toDateString().slice(4);
+    let dailyIconsArray = [];
+    axios.get(dailyWeatherUrl).then((response) => {
+      for (let i = 0; i < 4; i++) {
+        labelsArray.push(
+          `${new Date(response.data.list[i].dt_txt).getHours()}:00`
+        );
+        degreesArray.push(response.data.list[i].main.temp.toFixed());
+        windSpeedArray.push(`${response.data.list[i].wind.speed}km/h`);
+      }
 
-    setDay(`${dayNames[day]} | ${date}`);
+      dailyIconsIndexes.forEach((item) =>
+        dailyIconsArray.push(response.data.list[item].weather[0].id)
+      );
+
+      setDailyIconsId(dailyIconsArray);
+
+      setLabels(labelsArray);
+      setDegrees(degreesArray);
+      setWindSpeed(windSpeedArray);
+    });
   };
 
   const searchCity = (event) => {
     if (event.key === "Enter") {
-      getWeatherData();
+      getCurrentWeatherData();
+      getDailyWeatherData();
     }
   };
 
   useEffect(() => {
     const handleLoad = () => {
-      getWeatherData();
-      getDate();
+      getCurrentWeatherData();
+      getDailyWeatherData();
     };
     window.addEventListener("load", handleLoad);
     return () => {
@@ -62,17 +89,33 @@ function App() {
   }, []);
 
   return (
-    <div className='flex flex-col h-screen px-6 py-12 text-white'>
-      <SearchField />
+    <div className="flex flex-col h-screen px-6 py-12 text-white">
+      <div className={style.inputContainer}>
+        <div>
+          <img src={pin} alt="" />
+        </div>
+        <input
+          type="text"
+          className={style.city}
+          value={city}
+          onChange={(event) => setCity(event.target.value)}
+          onKeyPress={searchCity}
+        />
+      </div>
+      <div className="lg:px-[60px] min-h-[64px] mb-3">{errorMessage && <p className={style.errorMessage}> {errorMessage} </p>}</div>
+      
 
-      <CurrentWeather />
+      <CurrentWeather data={data} />
 
       <div className="lg:flex lg:gap-x-[2%] lg:justify-center lg:px-[30px]">
         <Sidebar />
-        <DailyWeather city={city} />
-        <HourlyWeather city={city} />
+        <DailyWeather dailyIconsId={dailyIconsId} />
+        <HourlyWeather
+          labels={labels}
+          degrees={degrees}
+          windSpeed={windSpeed}
+        />
       </div>
-        
     </div>
   );
 }
