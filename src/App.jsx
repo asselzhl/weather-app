@@ -5,6 +5,7 @@ import pin from "./assets/svg/pin.svg";
 
 import HourlyWeather from "./components/HourlyWeather";
 import DailyWeather from "./components/DailyWeather";
+import Sidebar from "./components/Sidebar";
 
 const style = {
   container: `flex flex-col h-screen px-6 py-12 text-white`,
@@ -102,7 +103,8 @@ function App() {
           <h5 className={style.weatherTodayDate}>{day}</h5>
         </div>
       </div>
-      <div className="lg:flex lg:gap-x-[20px]">
+      <div className="lg:flex lg:gap-x-[2%] lg:justify-center lg:px-[30px]">
+        <Sidebar />
         <DailyWeather city={city} />
         <HourlyWeather city={city} />
       </div>

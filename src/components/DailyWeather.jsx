@@ -45,7 +45,7 @@ const DailyWeather = ({ city }) => {
   }, []);
   
   return (
-      <div className="mb-[32px] lg:mb-0 lg:bg-[#DFAE53]/80 lg:rounded-[40px] lg:pt-[34px] lg:pb-[47px] lg:w-[22.5%] order-2">
+      <div className="mb-[32px] lg:mb-0 lg:bg-[#DFAE53]/80 lg:rounded-[40px] lg:pt-[34px] lg:pb-[47px] lg:w-[22.5%] order-2 hills">
         <div className="lg:mb-[34px]">
           <Swiper
             className="text-center"
@@ -61,9 +61,9 @@ const DailyWeather = ({ city }) => {
               slideShadows: false,
             }}
           >
-            {dailyIconsId.map((iconId) => {
+            {dailyIconsId.map((iconId, index) => {
               return (
-                <SwiperSlide>
+                <SwiperSlide key={index}>
                   <SlideContent key={iconId} iconId={iconId} />
                 </SwiperSlide>
               );

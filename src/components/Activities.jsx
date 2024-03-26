@@ -13,7 +13,7 @@ const Activities = () => {
         <div className='flex gap-x-[22px] justify-center'>
             {activities.map((activity, index) => {
                 return (
-                    <div>
+                    <div key={index}>
                         <img src={activity.img} alt="" />
                         <h6 className='text-[#2B261D] text-xs'>{`${activity.distance} away`}</h6>
                     </div>

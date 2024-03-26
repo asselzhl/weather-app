@@ -44,6 +44,12 @@
 .owf-13x {
   font-size: 13em;
 }
+@media(min-width: 1024px) {
+  .owf-13x {
+    font-size: 18em;
+  }
+}
+
 .owf-fw {
   width: 1.28571429em;
   text-align: center;
