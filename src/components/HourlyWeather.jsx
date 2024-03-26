@@ -5,6 +5,12 @@ import clock from "../assets/svg/clock.svg";
 
 import Activities from "./Activities";
 
+const style = {
+  activitiesContainer: `mb-[32px] hidden lg:block lg:bg-[#DFAE53]/80 lg:rounded-[40px] pt-[20px] pb-[35px] lg:px-[35px]`,
+  lineChartContainer: `bg-[#DFAE53]/80 rounded-lg lg:rounded-[40px] h-[35vh]`,
+  lineChartTitle: `flex gap-x-1.5 p-3 lg:px-[35px]`
+};
+
 import {
   Chart as ChartJS,
   LineElement,
@@ -90,11 +96,11 @@ const HourlyWeather = ({ labels, degrees, windSpeed }) => {
 
   return (
     <div className="order-1 lg:basis-[60%]">
-      <div className="mb-[32px] hidden lg:block lg:bg-[#DFAE53]/80 lg:rounded-[40px] pt-[20px] pb-[35px] lg:px-[35px]">
+      <div className={style.activitiesContainer}>
         <Activities />
       </div>
-      <div className="bg-[#DFAE53]/80 rounded-lg lg:rounded-[40px] h-[35vh]">
-        <div className="flex gap-x-1.5 p-3 lg:px-[35px]">
+      <div className={style.lineChartContainer}>
+        <div className={style.lineChartTitle}>
           <img src={clock} alt="" />
           24-hour forecast
         </div>

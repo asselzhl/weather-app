@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 const style = {
-  weatherToday: `mb-9 grid place-content-center lg:grid-cols-2 lg:gap-y-24 lg:px-24`,
-  weatherTodayTitle: `text-2xl font-medium mb-3 lg:text-5xl text-center lg:text-left`,
-  weatherTodayIcon: `mb-3`,
-  weatherTodayTemp: `text-6xl font-medium mb-4`,
-  weatherTodayDate: `text-lg`,
+  currentWeatherContainer: `mb-9 grid place-content-center lg:grid-cols-2 lg:gap-y-24 lg:px-24`,
+  currentWeatherTitle: `text-2xl font-medium mb-3 lg:text-5xl text-center lg:text-left`,
+  currentWeatherIcon: `mb-3 lg:row-start-1 lg:row-end-3 lg:col-start-2 lg:text-right lg:place-self-end`,
+  currentWeatherTemp: `text-6xl font-medium mb-4`,
+  currentWeatherDate: `text-lg`,
 };
 
 const CurrentWeather = ({data}) => {
@@ -37,22 +37,22 @@ const CurrentWeather = ({data}) => {
   }, []);
 
   return (
-    <div className={style.weatherToday}>
-      <div className={style.weatherTodayTitle}>
+    <div className={style.currentWeatherContainer}>
+      <div className={style.currentWeatherTitle}>
         {data.weather ? data.weather[0].main : null}
       </div>
-      <div className="lg:row-start-1 lg:row-end-3 lg:col-start-2 lg:text-right lg:place-self-end">
+      <div className={style.currentWeatherIcon}>
         <i
-          className={`${style.weatherTodayIcon} owf owf-13x owf-${
+          className={`owf owf-13x owf-${
             data.weather ? data.weather[0].id : ""
           }`}
         ></i>
       </div>
       <div className="text-center lg:text-left">
-        <div className={style.weatherTodayTemp}>
+        <div className={style.currentWeatherTemp}>
           {data.main ? data.main.temp.toFixed() : null}°C
         </div>
-        <h5 className={style.weatherTodayDate}>{day}</h5>
+        <h5 className={style.currentWeatherDate}>{day}</h5>
       </div>
     </div>
   );

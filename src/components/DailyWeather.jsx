@@ -14,11 +14,16 @@ import sun from "../assets/svg/sun.svg";
 
 import { Navigation, EffectCoverflow } from "swiper/modules";
 
+const style = {
+  dailyWeatherContainer: `mb-[32px] lg:mb-0 lg:bg-[#DFAE53]/80 lg:rounded-[40px] lg:pt-[34px] lg:pb-[47px] lg:w-[22.5%] order-2 hills`,
+  swiperContainer: `lg:mb-[34px]`,
+  airConditionsContainer: `pl-[15px] hidden lg:block`
+};
 
 const DailyWeather = ({ dailyIconsId }) => {
   return (
-      <div className="mb-[32px] lg:mb-0 lg:bg-[#DFAE53]/80 lg:rounded-[40px] lg:pt-[34px] lg:pb-[47px] lg:w-[22.5%] order-2 hills">
-        <div className="lg:mb-[34px]">
+      <div className={style.dailyWeatherContainer}>
+        <div className={style.swiperContainer}>
           <Swiper
             className="text-center"
             slidesPerView={5}
@@ -42,7 +47,7 @@ const DailyWeather = ({ dailyIconsId }) => {
             })}
           </Swiper>
         </div>
-        <div className="pl-[15px] hidden lg:block">
+        <div className={style.airConditionsContainer}>
           <h3 className="mb-[20px]">AIR CONDITIONS</h3>
           <div>
             <div className="flex gap-x-2 mb-[45px]">
@@ -92,5 +97,6 @@ const SlideContent = ({ iconId }) => {
     </div>
   );
 };
+
 
 export default DailyWeather;

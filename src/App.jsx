@@ -9,10 +9,13 @@ import DailyWeather from "./components/DailyWeather";
 import Sidebar from "./components/Sidebar";
 
 const style = {
+  wrapper: `flex flex-col h-screen px-6 py-12 text-white`,
   container: `flex flex-col h-screen px-6 py-12 text-white`,
   inputContainer: `text-white flex items-center lg:pl-24`,
   city: `bg-transparent d-block p-2 font-medium text-xl focus:outline-none lg:text-2xl	capitalize`,
-  errorMessage: `capitalize text-xl lg:text-2x text-center bg-[#DFAE53]/80 rounded-lg lg:rounded-[40px] p-3 mt-3 font-medium`
+  errorMessageContainer: `lg:px-[60px] min-h-[64px] mb-3`,
+  errorMessage: `capitalize text-xl lg:text-2x text-center bg-[#DFAE53]/80 rounded-lg lg:rounded-[40px] p-3 mt-3 font-medium`,
+  detailsContainer: `lg:flex lg:gap-x-[2%] lg:justify-center lg:px-[30px]`
 };
 
 function App() {
@@ -36,7 +39,7 @@ function App() {
       .get(currentWeatherUrl)
       .then((response) => {
         setData(response.data);
-        setErrorMessage('');
+        setErrorMessage("");
       })
       .catch((error) => {
         setErrorMessage(error.response.data.message);
@@ -89,7 +92,7 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen px-6 py-12 text-white">
+    <div className={style.wrapper}>
       <div className={style.inputContainer}>
         <div>
           <img src={pin} alt="" />
@@ -102,12 +105,13 @@ function App() {
           onKeyPress={searchCity}
         />
       </div>
-      <div className="lg:px-[60px] min-h-[64px] mb-3">{errorMessage && <p className={style.errorMessage}> {errorMessage} </p>}</div>
-      
+      <div className={style.errorMessageContainer}>
+        {errorMessage && <p className={style.errorMessage}> {errorMessage} </p>}
+      </div>
 
       <CurrentWeather data={data} />
 
-      <div className="lg:flex lg:gap-x-[2%] lg:justify-center lg:px-[30px]">
+      <div className={style.detailsContainer}>
         <Sidebar />
         <DailyWeather dailyIconsId={dailyIconsId} />
         <HourlyWeather
