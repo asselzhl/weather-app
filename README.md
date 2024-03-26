@@ -1,4 +1,6 @@
 # Weather app
+This is a React Web Application that utilizes the OpenWeatherMap API to display and view information about the current weather and forecast for several days for a specific city.
+
 
 ## Installation
 ### To install and run the app locally, follow these steps:
