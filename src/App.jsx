@@ -26,8 +26,9 @@ function App() {
   const [degrees, setDegrees] = useState([]);
   const [windSpeed, setWindSpeed] = useState([]);
   const [dailyIconsId, setDailyIconsId] = useState([]);
+  const [dates, setDates] = useState([]);
 
-  const dailyIconsIndexes = [0, 4, 8, 12, 16, 20, 24, 28, 32, 36];
+  const dailyIconsIndexes = [];
 
   const apiKey = "b94e2326dd926a1013c56922ede2651e";
 
@@ -52,20 +53,36 @@ function App() {
     let windSpeedArray = [];
 
     let dailyIconsArray = [];
+    let datesArray = [];
     axios.get(dailyWeatherUrl).then((response) => {
-      for (let i = 0; i < 4; i++) {
-        labelsArray.push(
-          `${new Date(response.data.list[i].dt_txt).getHours()}:00`
-        );
-        degreesArray.push(response.data.list[i].main.temp.toFixed());
-        windSpeedArray.push(`${response.data.list[i].wind.speed}km/h`);
-      }
+      response.data.list.forEach((item, index) => {
+        datesArray.push(item.dt_txt.substring(0, 10));
 
-      dailyIconsIndexes.forEach((item) =>
-        dailyIconsArray.push(response.data.list[item].weather[0].id)
-      );
+        if (new Date(item.dt_txt).getDate() === new Date().getDate()) {
+          labelsArray.push(`${new Date(item.dt_txt).getHours()}:00`);
+          degreesArray.push(item.main.temp.toFixed());
+          windSpeedArray.push(`${item.wind.speed.toFixed()} km/h`);
+        }
 
+        
+      });
+      
+      [...new Set(datesArray)].forEach((date) => {
+        for (let i = 0; i < response.data.list.length; i++) {
+          if (new Date(date).getDate() === new Date(response.data.list[i].dt_txt).getDate()) {
+            dailyIconsIndexes.push(i);
+            break;
+          }
+        }
+        
+      });
+      
+
+      dailyIconsIndexes.forEach((item) => {
+        dailyIconsArray.push(response.data.list[item].weather[0].id);
+      });
       setDailyIconsId(dailyIconsArray);
+      setDates([...new Set(datesArray)]);
 
       setLabels(labelsArray);
       setDegrees(degreesArray);
@@ -113,7 +130,7 @@ function App() {
 
       <div className={style.detailsContainer}>
         <Sidebar />
-        <DailyWeather dailyIconsId={dailyIconsId} />
+        <DailyWeather dates={dates} dailyIconsId={dailyIconsId} data={data} />
         <HourlyWeather
           labels={labels}
           degrees={degrees}

@@ -20,15 +20,24 @@ const style = {
   airConditionsContainer: `pl-[15px] hidden lg:block`
 };
 
-const DailyWeather = ({ dailyIconsId }) => {
+const DailyWeather = ({dates, dailyIconsId, data }) => {
+  const dayNames = [
+    "SUN",
+    "MON",
+    "TUE",
+    "WED",
+    "THU",
+    "FRI",
+    "SAT",
+  ];
+
   return (
       <div className={style.dailyWeatherContainer}>
         <div className={style.swiperContainer}>
           <Swiper
             className="text-center"
-            slidesPerView={5}
+            slidesPerView={3}
             navigation={true}
-            
             centeredSlides={true}
             modules={[Navigation, EffectCoverflow]}
             effect={"coverflow"}
@@ -41,7 +50,8 @@ const DailyWeather = ({ dailyIconsId }) => {
             {dailyIconsId.map((iconId, index) => {
               return (
                 <SwiperSlide key={index}>
-                  <SlideContent key={iconId} iconId={iconId} />
+                  <div className="text-xl">{dayNames[new Date(dates[index]).getDay()]}</div>
+                  <SlideContent key={iconId} iconId={iconId} dates={dates} />
                 </SwiperSlide>
               );
             })}
@@ -54,7 +64,7 @@ const DailyWeather = ({ dailyIconsId }) => {
               <img className="basis-5" src={thermometr} alt="" />
               <div>
                 <h6>Real feel</h6>
-                <p>30°</p>
+                <p>{data.main ? data.main.feels_like.toFixed() : null}°</p>
               </div>
             </div>
             
@@ -62,7 +72,7 @@ const DailyWeather = ({ dailyIconsId }) => {
               <img className="basis-5" src={wind} alt="" />
               <div>
                 <h6>Wind</h6>
-                <p>0.8 km/hr</p>
+                <p>{data.wind ? data.wind.speed.toFixed() : null} km/hr</p>
               </div>
             </div>
 
@@ -70,7 +80,7 @@ const DailyWeather = ({ dailyIconsId }) => {
               <img className="basis-5" src={drop} alt="" />
               <div>
                 <h6>Chance of rain</h6>
-                <p>2%</p>
+                <p>{data.rain ? data.rain['1h'].toFixed() : 0}%</p>
               </div>
             </div>
 
@@ -89,12 +99,9 @@ const DailyWeather = ({ dailyIconsId }) => {
 
 const SlideContent = ({ iconId }) => {
   return (
-    <div>
-      <div></div>
       <div>
         <i className={`owf owf-3x owf-${iconId}`}></i>
       </div>
-    </div>
   );
 };
 
