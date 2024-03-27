@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import pin from "./assets/svg/pin.svg";
+import arrowDown from "./assets/svg/arrowDown.svg";
 import user from "./assets/svg/user.svg";
 
 import CurrentWeather from "./components/CurrentWeather";
@@ -13,7 +14,7 @@ const style = {
   wrapper: `flex flex-col h-screen px-6 py-12 text-white`,
   container: `flex flex-col h-screen px-6 py-12 text-white`,
   inputContainer: `text-white flex items-center lg:pl-24`,
-  city: `bg-transparent d-block p-2 font-medium text-xl focus:outline-none lg:text-2xl	capitalize`,
+  city: `bg-transparent d-block p-2 font-medium text-xl focus:outline-none lg:text-2xl	capitalize max-w-[150px]`,
   errorMessageContainer: `lg:px-[60px] min-h-[64px] mb-3`,
   errorMessage: `capitalize text-xl lg:text-2x text-center bg-[#DFAE53]/80 rounded-lg lg:rounded-[40px] p-3 mt-3 font-medium`,
   detailsContainer: `lg:flex lg:gap-x-[2%] lg:justify-center lg:px-[30px]`,
@@ -122,6 +123,9 @@ function App() {
             onChange={(event) => setCity(event.target.value)}
             onKeyPress={searchCity}
           />
+          <button>
+            <img src={arrowDown} alt="" />
+          </button>
         </div>
         <button className="lg:hidden">
           <img src={user} alt="" width={30} height={30} />
