@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import pin from "./assets/svg/pin.svg";
+import user from "./assets/svg/user.svg";
 
 import CurrentWeather from "./components/CurrentWeather";
 import HourlyWeather from "./components/HourlyWeather";
@@ -15,7 +16,7 @@ const style = {
   city: `bg-transparent d-block p-2 font-medium text-xl focus:outline-none lg:text-2xl	capitalize`,
   errorMessageContainer: `lg:px-[60px] min-h-[64px] mb-3`,
   errorMessage: `capitalize text-xl lg:text-2x text-center bg-[#DFAE53]/80 rounded-lg lg:rounded-[40px] p-3 mt-3 font-medium`,
-  detailsContainer: `lg:flex lg:gap-x-[2%] lg:justify-center lg:px-[30px]`
+  detailsContainer: `lg:flex lg:gap-x-[2%] lg:justify-center lg:px-[30px]`,
 };
 
 function App() {
@@ -63,20 +64,19 @@ function App() {
           degreesArray.push(item.main.temp.toFixed());
           windSpeedArray.push(`${item.wind.speed.toFixed()} km/h`);
         }
-
-        
       });
-      
+
       [...new Set(datesArray)].forEach((date) => {
         for (let i = 0; i < response.data.list.length; i++) {
-          if (new Date(date).getDate() === new Date(response.data.list[i].dt_txt).getDate()) {
+          if (
+            new Date(date).getDate() ===
+            new Date(response.data.list[i].dt_txt).getDate()
+          ) {
             dailyIconsIndexes.push(i);
             break;
           }
         }
-        
       });
-      
 
       dailyIconsIndexes.forEach((item) => {
         dailyIconsArray.push(response.data.list[item].weather[0].id);
@@ -110,17 +110,22 @@ function App() {
 
   return (
     <div className={style.wrapper}>
-      <div className={style.inputContainer}>
-        <div>
-          <img src={pin} alt="" />
+      <div className="flex justify-between">
+        <div className={style.inputContainer}>
+          <div>
+            <img src={pin} alt="" />
+          </div>
+          <input
+            type="text"
+            className={style.city}
+            value={city}
+            onChange={(event) => setCity(event.target.value)}
+            onKeyPress={searchCity}
+          />
         </div>
-        <input
-          type="text"
-          className={style.city}
-          value={city}
-          onChange={(event) => setCity(event.target.value)}
-          onKeyPress={searchCity}
-        />
+        <button className="lg:hidden">
+          <img src={user} alt="" width={30} height={30} />
+        </button>
       </div>
       <div className={style.errorMessageContainer}>
         {errorMessage && <p className={style.errorMessage}> {errorMessage} </p>}

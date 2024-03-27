@@ -20,30 +20,6 @@ body {
     color: #F5B747;
 }
 
-.cloudy {
-    background-image: url(./assets/img/cloudyBg.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-.rainy {
-    background-image: url(./assets/img/rainyBg.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-.snowy {
-    background-image: url(./assets/img/snowyBg.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-.sunny {
-    background-image: url(./assets/img/sunnyBg.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
 
 .hills {
     background-image: url(./assets/img/hills.png);

@@ -7,8 +7,9 @@ import Activities from "./Activities";
 
 const style = {
   activitiesContainer: `mb-[32px] hidden lg:block lg:bg-[#DFAE53]/80 lg:rounded-[40px] pt-[20px] pb-[35px] lg:px-[35px]`,
-  lineChartContainer: `bg-[#DFAE53]/80 rounded-lg lg:rounded-[40px] h-[35vh]`,
-  lineChartTitle: `flex gap-x-1.5 p-3 lg:px-[35px]`
+  lineChartContainer: `bg-[#DFAE53]/80 rounded-lg lg:rounded-[40px] h-[285px] lg:h-[40vh] relative`,
+  lineChartTitle: `flex gap-x-1.5 p-3 lg:px-[35px]`,
+  lineChartButton: `md:hidden bg-[#EACA8F] rounded-[16px] py-[8px] px-[43px] text-xs min-w-[205px] absolute bottom-[19px] left-[22%]`
 };
 
 import {
@@ -82,7 +83,7 @@ const HourlyWeather = ({ labels, degrees, windSpeed }) => {
         display: false,
       },
       y: {
-        min: Math.min(...degrees) - 5,
+        min: Math.min(...degrees) - 10,
         max: Math.max(...degrees) + 5,
         grid: {
           display: false,
@@ -95,7 +96,7 @@ const HourlyWeather = ({ labels, degrees, windSpeed }) => {
   };
 
   return (
-    <div className="order-1 lg:basis-[60%]">
+    <div className="order-1 lg:w-[60%]">
       <div className={style.activitiesContainer}>
         <Activities />
       </div>
@@ -104,7 +105,9 @@ const HourlyWeather = ({ labels, degrees, windSpeed }) => {
           <img src={clock} alt="" />
           24-hour forecast
         </div>
+        
         <Line data={lineData} options={options} />
+        <button className={style.lineChartButton}>5-day forecast</button>
       </div>
     </div>
   );

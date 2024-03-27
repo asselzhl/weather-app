@@ -7,7 +7,7 @@ import cities from "../assets/svg/pinBig.svg";
 import settings from "../assets/svg/settings.svg";
 
 const style = {
-  sidebarContainer: `hidden lg:flex lg:flex-col lg:justify-between items-center lg:bg-[#DFAE53]/80 lg:rounded-[40px] lg:p-[20px]`,
+  sidebarContainer: `hidden lg:flex lg:flex-col lg:justify-between items-center lg:bg-[#DFAE53]/80 lg:rounded-[40px] lg:p-[20px] lg:w-[7%]`,
   sidebarNavigation: `flex flex-col justify-between items-center gap-y-[22px]`,
   navigationItem: `flex gap-y-[2px] flex-col items-center justify-center font-semibold`
 };

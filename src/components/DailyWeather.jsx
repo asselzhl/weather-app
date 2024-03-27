@@ -15,7 +15,7 @@ import sun from "../assets/svg/sun.svg";
 import { Navigation, EffectCoverflow } from "swiper/modules";
 
 const style = {
-  dailyWeatherContainer: `mb-[32px] lg:mb-0 lg:bg-[#DFAE53]/80 lg:rounded-[40px] lg:pt-[34px] lg:pb-[47px] lg:w-[22.5%] order-2 hills`,
+  dailyWeatherContainer: `mb-[12px] lg:mb-0 lg:bg-[#DFAE53]/80 lg:rounded-[40px] lg:pt-[34px] lg:pb-[47px] lg:w-[22.5%] order-2 hills`,
   swiperContainer: `lg:mb-[34px]`,
   airConditionsContainer: `pl-[15px] hidden lg:block`
 };
